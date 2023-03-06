@@ -38,11 +38,26 @@
           </v-card>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-12"><q-separator spaced="xl" /></div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <v-card class="q-pt-sm">
+            <v-card-section>
+              <Codemirror v-model="prev" merge :options="diffOptions"
+            /></v-card-section>
+          </v-card>
+        </div>
+      </div>
     </v-card-section>
   </v-card>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
+
+// CodeDiff
 const mode = ref('split');
 const theme = ref('dark');
 const language = ref('js');
@@ -60,4 +75,13 @@ const languages = [
   'plaintext',
   'typescript',
 ];
+// codemirror
+const diffOptions = reactive({
+  autorefresh: true,
+  value: current.value,
+  orig: prev.value,
+  connect: 'align',
+  mode: language.value,
+  theme: theme.value,
+});
 </script>
